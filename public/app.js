@@ -749,7 +749,7 @@
           }
           y.appendChild(tasKutu(son));
           y.style.width = 'var(--tw)';
-          y.style.height = 'var(--th)';
+          y.style.height = 'calc(var(--tw) * 1.38)';
         } else y.classList.add('bos');
         if (yer === 3 && son && benimSiram() && !o.cekti) {
           y.classList.add('alinabilir');

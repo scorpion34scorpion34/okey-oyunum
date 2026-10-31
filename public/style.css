@@ -229,7 +229,7 @@ input { font-family: inherit; }
 .cip { background: var(--panel); border: 1px solid var(--cizgi); border-radius: 20px; padding: 5px 12px; font-weight: 700; font-size: 14px; }
 .cip.tikla { cursor: pointer; }
 .masa-govde { flex: 1; display: flex; gap: 8px; min-height: 0; }
-.masa-alan { flex: 1; position: relative; min-width: 0; border-radius: 20px; }
+.masa-alan { flex: 1; position: relative; min-width: 0; border-radius: 20px; --tw: clamp(30px, 4.4vw, 54px); }
 .oyuncu {
   position: absolute; display: flex; align-items: center; gap: 8px; background: var(--panel); border: 2px solid var(--cizgi);
   padding: 5px 12px 5px 6px; border-radius: 30px; z-index: 3; transition: box-shadow .2s, border-color .2s;
@@ -255,10 +255,10 @@ input { font-family: inherit; }
 .yigin.bos { border: 2px dashed rgba(255,255,255,.35); width: var(--tw); height: calc(var(--tw) * 1.38); }
 .yigin.alinabilir .tas { box-shadow: 0 0 0 3px var(--altin), 0 0 18px var(--altin); cursor: pointer; animation: nabiz 1.2s infinite; }
 .yigin.hedef { box-shadow: 0 0 0 3px #fff, 0 0 20px #fff; }
-.yigin.y-sol-alt { left: 22%; bottom: 52px; }
-.yigin.y-sag-alt { right: 22%; bottom: 52px; }
-.yigin.y-sol-ust { left: 22%; top: 50px; }
-.yigin.y-sag-ust { right: 22%; top: 50px; }
+.yigin.y-sol-alt { left: 24%; bottom: 56px; }
+.yigin.y-sag-alt { right: 24%; bottom: 56px; }
+.yigin.y-sol-ust { left: 24%; top: 56px; }
+.yigin.y-sag-ust { right: 24%; top: 56px; }
 .yigin .sayac { position: absolute; bottom: -18px; font-size: 12px; color: var(--soluk); }
 
 .orta-alan { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); display: flex; gap: 18px; align-items: flex-start; z-index: 2; }
