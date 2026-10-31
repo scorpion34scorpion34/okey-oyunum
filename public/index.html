@@ -2,338 +2,134 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Okey Masası</title>
-  <style>
-    body { font-family: -apple-system, sans-serif; background: #1f6b3a; color: white; padding: 20px; margin: 0; }
-    h1 { margin: 0 0 12px; }
-    button { font-size: 17px; padding: 9px 16px; border-radius: 8px; border: none; cursor: pointer; }
-    button:disabled { opacity: 0.4; cursor: default; }
-    input { font-size: 18px; padding: 9px; border-radius: 8px; border: none; }
-    #oyunAlani { display: none; }
-
-    #koltuklar { display: flex; gap: 10px; margin: 10px 0 16px; flex-wrap: wrap; }
-    .koltuk { background: rgba(0,0,0,0.25); padding: 10px 12px; border-radius: 10px; min-width: 150px;
-              display: flex; align-items: center; gap: 10px; }
-    .koltuk.bos { opacity: 0.4; }
-    .koltuk.ben { outline: 2px solid #ffd54f; }
-    .koltuk.sirada { background: #ffb300; color: #222; animation: nabiz 1s infinite alternate; }
-    @keyframes nabiz { from { box-shadow: 0 0 0 0 rgba(255,179,0,0.7); } to { box-shadow: 0 0 0 8px rgba(255,179,0,0); } }
-    .koltuk .ad { font-weight: bold; }
-    .koltuk .alt { font-size: 13px; opacity: 0.85; }
-    .koltuk .tas { width: 34px; height: 48px; font-size: 20px; }
-    .koltuk .tas.alinabilir { cursor: pointer; outline: 3px solid #4fc3f7; }
-
-    #orta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
-    #mesaj { background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 8px; min-height: 20px; margin-bottom: 12px; }
-    #uyari { color: #ffcdd2; min-height: 20px; }
-
-    #istaka { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px; background: #8b5a2b;
-              border-radius: 10px; min-height: 140px; align-content: flex-start; }
-    .tas { width: 44px; height: 64px; background: #fffbea; border-radius: 6px; display: flex;
-           align-items: center; justify-content: center; font-size: 26px; font-weight: bold;
-           box-shadow: 0 2px 4px rgba(0,0,0,0.4); box-sizing: border-box; user-select: none; }
-    #istaka .tas { cursor: grab; }
-    .tas.okey { border: 3px solid #ffb300; background: #fff3c4; }
-    .tas.secili { transform: translateY(-10px); box-shadow: 0 8px 10px rgba(0,0,0,0.5); outline: 3px solid #4fc3f7; }
-    .tas.yeni { outline: 3px dashed #81c784; }
-    .kirmizi { color: #d32f2f; }
-    .sari    { color: #e0a800; }
-    .mavi    { color: #1565c0; }
-    .siyah   { color: #222; }
-    .sahte   { color: #2e7d32; font-size: 22px; }
-
-    #atmaAlani { margin-top: 12px; padding: 14px; border: 3px dashed rgba(255,255,255,0.5);
-                 border-radius: 10px; text-align: center; }
-    #atmaAlani.aktif { border-color: #ffb300; background: rgba(255,179,0,0.15); }
-    #dugmeler { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-    #sonuc { display: none; background: rgba(0,0,0,0.35); border: 2px solid #ffd54f; border-radius: 12px;
-             padding: 14px; margin-bottom: 14px; }
-    #sonuc h2 { margin: 0 0 10px; font-size: 22px; color: #ffd54f; }
-    #sonucEl { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-    #bitir { background: #ffd54f; font-weight: bold; }
-    .yardim { font-size: 14px; opacity: 0.8; margin-top: 14px; line-height: 1.5; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1c6b33">
+  <title>Neşeli Sohbet Oyunlar · Okey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Okey Masası</h1>
 
-  <div id="giris">
-    <input id="isim" placeholder="Adını yaz" maxlength="15">
-    <button id="otur">Masaya Otur</button>
-  </div>
-
-  <div id="koltuklar"></div>
-  <p id="uyari"></p>
-
-  <div id="oyunAlani">
-    <div id="sonuc"><h2 id="sonucBaslik"></h2><div id="sonucEl"></div></div>
-    <div id="mesaj"></div>
-
-    <div id="orta">
-      <button id="dagit">Yeni El Dağıt</button>
-      <button id="ortadanCek" disabled>Ortadan Çek</button>
-      <span id="gostergeAlani"></span>
+  <!-- ================= ANA MENÜ ================= -->
+  <section id="menu" class="ekran">
+    <div class="menu-ust">
+      <div class="profil-cip" id="menuProfil"><span class="simge">😀</span><span class="isim">Oyuncu</span></div>
+      <button class="ikon-dugme" id="menuAyar" title="Ayarlar">⚙️</button>
     </div>
 
-    <div id="istaka"></div>
-    <div id="atmaAlani">Atmak için taşı buraya sürükle (ya da taşa tıkla, sonra "Seçili Taşı At")</div>
+    <h1 class="baslik"><span>Neşeli</span> <span>Sohbet</span> <span>Oyunlar</span></h1>
+    <p class="alt-baslik">Arkadaşlarınla sohbet ederek okey oyna</p>
 
-    <div id="dugmeler">
-      <button id="at" disabled>Seçili Taşı At</button>
-      <button id="bitir" disabled>Seçili Taşı Atıp Bitir</button>
-      <button id="diz">Renge Göre Diz</button>
+    <div class="logo">
+      <div class="logo-istaka">
+        <div class="tas kirmizi">7</div>
+        <div class="tas mavi">7</div>
+        <div class="tas siyah">7</div>
+        <div class="tas sahte">★</div>
+      </div>
+      <div class="logo-balon">Okey! 🎉</div>
+      <div class="logo-yazi">OKEY</div>
     </div>
 
-    <div class="yardim">
-      Taşların yerini değiştirmek için istakada sürükle bırak.
-      Sıra sana gelince ortadan çek ya da solundaki oyuncunun attığı mavi çerçeveli taşa tıklayıp al, sonra bir taş at.<br>
-      Elin bittiyse fazla taşı seç ve "Seçili Taşı Atıp Bitir"e bas. Kalan 14 taş seri/per ya da 7 çift olmalı; okey joker sayılır.<br>
-      Puan: normal bitiş 2, çiftten ya da okey atarak bitirmek iki katı.
+    <div class="menu-dugmeler">
+      <button class="dugme altin" id="btnBilgisayar">🖥️ Bilgisayara karşı</button>
+      <button class="dugme" id="btnOnline">🌐 Online oyna</button>
+      <div class="menu-kucukler">
+        <button class="dugme" id="btnYardim"><b>💡</b>Nasıl oynanır?</button>
+        <button class="dugme" id="btnKurallar"><b>📖</b>Kurallar</button>
+        <button class="dugme" id="btnIstatistik"><b>📊</b>İstatistikler</button>
+      </div>
     </div>
-  </div>
+    <div class="etiketler">ÜCRETSİZ · REKLAMSIZ · SOHBETLİ</div>
+  </section>
+
+  <!-- ================= LOBİ ================= -->
+  <section id="lobi" class="ekran gizli">
+    <div class="ust-cubuk">
+      <button class="ikon-dugme" id="lobiGeri" title="Geri">‹</button>
+      <h2>Online oyna</h2>
+      <span class="cip" id="baglantiDurum">● Bağlanıyor</span>
+    </div>
+    <div>
+      <div class="sekmeler">
+        <button class="secik" data-sekme="masalar">🎲 Masalar</button>
+        <button data-sekme="lobiSohbet">💬 Sohbet <span id="lobiRozet"></span></button>
+      </div>
+      <div class="lobi-govde" id="sekme-masalar">
+        <div class="buyuk-secenekler">
+          <button class="dugme altin" id="btnHizli">⚡ Hızlı oyun<small>Açık bir masaya otomatik katıl</small></button>
+          <button class="dugme" id="btnMasaKur">👥 Arkadaşlarla oyna<small>Masa kur, kodu paylaş</small></button>
+        </div>
+        <div class="kod-satir">
+          <input class="metin-kutu" id="kodGir" maxlength="4" placeholder="MASA KODU">
+          <button class="dugme" id="btnKodKatil">Katıl</button>
+        </div>
+        <div class="bolum-baslik">Açık masalar</div>
+        <div id="masaListe"></div>
+      </div>
+      <div class="lobi-govde gizli" id="sekme-lobiSohbet" style="height: 60vh;">
+        <div class="sohbet" id="lobiSohbetKutu"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MASA ================= -->
+  <section id="masa" class="ekran gizli">
+    <div class="masa-ust">
+      <button class="ikon-dugme" id="masaMenu" title="Menü">☰</button>
+      <div class="orta">
+        <span class="cip" id="bicimCip">Tek el</span>
+        <span class="cip tikla" id="kodCip" title="Kodu kopyala">Masa: ----</span>
+        <span class="cip yatay-ipucu">↻ Yan çevirirsen taşlar büyür</span>
+      </div>
+      <button class="ikon-dugme" id="sesDugme" title="Ses">🔊</button>
+      <button class="ikon-dugme" id="sohbetDugme" title="Sohbet">💬<span class="rozet gizli" id="sohbetRozet">0</span></button>
+    </div>
+
+    <div class="masa-govde">
+      <div class="masa-alan" id="masaAlan">
+        <div id="oyuncular"></div>
+        <div id="yiginlar"></div>
+        <div class="orta-alan">
+          <div class="deste" id="deste"><div class="tas">0</div><div class="tas" id="desteSayi">0</div></div>
+          <div class="gosterge-kutu" id="gostergeKutu">
+            <div id="gostergeTas"></div>
+            <small>GÖSTERGE</small>
+            <div class="okey-cip" id="okeyCip"></div>
+          </div>
+        </div>
+        <div class="durum-yazi" id="durumYazi"></div>
+        <div id="katman"></div>
+      </div>
+
+      <aside class="sohbet-panel" id="sohbetPanel">
+        <div class="bas"><span>💬 Masa sohbeti</span><button class="dugme kucuk" id="sohbetKapat">✕</button></div>
+        <div class="sohbet" id="masaSohbetKutu"></div>
+      </aside>
+    </div>
+
+    <div class="alt-bolum">
+      <div class="yan-dugmeler" style="position: relative;">
+        <div class="diz-menu gizli" id="dizMenu">
+          <button class="dugme" data-diz="seri">Seriler</button>
+          <button class="dugme" data-diz="per">Perler</button>
+          <button class="dugme" data-diz="cift">Çiftler</button>
+        </div>
+        <button class="dugme" id="dizDugme"><b>⇅</b>Diz</button>
+      </div>
+      <div class="istaka" id="istaka"></div>
+      <div class="yan-dugmeler">
+        <button class="dugme" id="atDugme" disabled><b>⬆</b>At</button>
+        <button class="dugme" id="bitirDugme" disabled><b>🏁</b>Bitir</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="pencereler"></div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-    const renkAdi = { kirmizi: 'Kırmızı', sari: 'Sarı', mavi: 'Mavi', siyah: 'Siyah' };
-    const renkSira = { kirmizi: 0, sari: 1, mavi: 2, siyah: 3, sahte: 4 };
-
-    let durum = null;      // sunucudan gelen son durum
-    let dizilis = [];      // istakadaki taşların sırası (taş id'leri)
-    let seciliId = null;   // tıklanarak seçilen taş
-    let yeniId = null;     // son çekilen taş
-    let surukId = null;    // sürüklenen taş
-
-    const $ = (id) => document.getElementById(id);
-
-    function okeyMi(tas) {
-      return durum && durum.okey && tas.renk === durum.okey.renk && tas.sayi === durum.okey.sayi;
-    }
-
-    function tasKutusu(tas) {
-      const kutu = document.createElement('div');
-      kutu.className = 'tas ' + tas.renk;
-      kutu.textContent = tas.renk === 'sahte' ? '★' : tas.sayi;
-      if (okeyMi(tas)) kutu.classList.add('okey');
-      return kutu;
-    }
-
-    function benimSiram() {
-      return durum && durum.oyunVar && durum.sira === durum.benim;
-    }
-
-    // ---------- Masaya oturma ----------
-    $('otur').onclick = () => socket.emit('katil', $('isim').value);
-    $('isim').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('otur').click(); });
-
-    socket.on('uyari', (metin) => {
-      $('uyari').textContent = metin;
-      setTimeout(() => { if ($('uyari').textContent === metin) $('uyari').textContent = ''; }, 3000);
-    });
-
-    // Masaya oturmamış kişi için koltuk listesi
-    socket.on('masa', (isimler) => {
-      if (durum) return;
-      koltuklariCiz(isimler, null);
-    });
-
-    // ---------- Durum ----------
-    socket.on('durum', (yeni) => {
-      const eskiIdler = new Set(dizilis);
-      durum = yeni;
-      $('giris').style.display = 'none';
-      $('oyunAlani').style.display = 'block';
-
-      // Dizilişi koru: elde kalanlar aynı sırada, yeni gelenler sona
-      const eldeki = new Set(durum.elim.map((t) => t.id));
-      dizilis = dizilis.filter((id) => eldeki.has(id));
-      const yeniler = durum.elim.filter((t) => !eskiIdler.has(t.id));
-      yeniler.forEach((t) => dizilis.push(t.id));
-      yeniId = (yeniler.length === 1 && eskiIdler.size > 0) ? yeniler[0].id : null;
-      if (!eldeki.has(seciliId)) seciliId = null;
-
-      $('mesaj').textContent = durum.mesaj || '';
-      ciz();
-    });
-
-    function koltuklariCiz(isimler, d) {
-      const alan = $('koltuklar');
-      alan.innerHTML = '';
-      const n = isimler.length;
-      for (let i = 0; i < 4; i++) {
-        const k = document.createElement('div');
-        k.className = 'koltuk';
-        if (!isimler[i]) {
-          k.textContent = (i + 1) + '. (boş)';
-          k.classList.add('bos');
-          alan.appendChild(k);
-          continue;
-        }
-        const yazi = document.createElement('div');
-        const ad = document.createElement('div');
-        ad.className = 'ad';
-        ad.textContent = (i + 1) + '. ' + isimler[i];
-        yazi.appendChild(ad);
-
-        if (d && !d.oyunVar) {
-          const alt = document.createElement('div');
-          alt.className = 'alt';
-          alt.textContent = d.puanlar[i] + ' puan';
-          yazi.appendChild(alt);
-        }
-        if (d && d.oyunVar) {
-          const alt = document.createElement('div');
-          alt.className = 'alt';
-          alt.textContent = d.tasSayilari[i] + ' taş' + (d.sira === i ? ' · sırada' : '') + ' · ' + d.puanlar[i] + ' puan';
-          yazi.appendChild(alt);
-        }
-        k.appendChild(yazi);
-
-        if (d) {
-          if (i === d.benim) k.classList.add('ben');
-          if (d.oyunVar && d.sira === i) k.classList.add('sirada');
-
-          // Bu oyuncunun en son attığı taş
-          const son = d.oyunVar ? d.sonAtilanlar[i] : null;
-          if (son) {
-            const t = tasKutusu(son);
-            const solum = (d.benim - 1 + n) % n;
-            if (i === solum && benimSiram() && !d.cekti) {
-              t.classList.add('alinabilir');
-              t.title = 'Bu taşı al';
-              t.onclick = () => socket.emit('cek', 'yan');
-            }
-            k.appendChild(t);
-          }
-        }
-        alan.appendChild(k);
-      }
-    }
-
-    function ciz() {
-      koltuklariCiz(durum.isimler, durum);
-
-      // Gösterge
-      const g = $('gostergeAlani');
-      g.innerHTML = '';
-      if (durum.oyunVar) {
-        g.style.display = 'inline-flex';
-        g.style.alignItems = 'center';
-        g.style.gap = '10px';
-        g.append('Gösterge:');
-        g.appendChild(tasKutusu(durum.gosterge));
-        g.append('Okey: ' + renkAdi[durum.okey.renk] + ' ' + durum.okey.sayi + ' · Ortada ' + durum.kalan + ' taş');
-      }
-
-      $('ortadanCek').disabled = !(benimSiram() && !durum.cekti);
-      $('at').disabled = !(benimSiram() && durum.cekti && seciliId !== null);
-      $('bitir').disabled = !(benimSiram() && durum.cekti && seciliId !== null);
-      if (durum.oyunVar) $('sonuc').style.display = 'none';
-      $('atmaAlani').classList.toggle('aktif', benimSiram() && durum.cekti);
-
-      // İstaka
-      const istaka = $('istaka');
-      istaka.innerHTML = '';
-      const tasBul = {};
-      durum.elim.forEach((t) => (tasBul[t.id] = t));
-
-      dizilis.forEach((id) => {
-        const tas = tasBul[id];
-        const kutu = tasKutusu(tas);
-        kutu.draggable = true;
-        if (id === seciliId) kutu.classList.add('secili');
-        if (id === yeniId) kutu.classList.add('yeni');
-
-        kutu.onclick = () => {
-          seciliId = seciliId === id ? null : id;
-          ciz();
-        };
-        kutu.ondblclick = () => tasAt(id);
-
-        kutu.addEventListener('dragstart', (e) => {
-          surukId = id;
-          e.dataTransfer.effectAllowed = 'move';
-          e.dataTransfer.setData('text/plain', String(id));
-        });
-        kutu.addEventListener('dragover', (e) => e.preventDefault());
-        kutu.addEventListener('drop', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (surukId === null || surukId === id) return;
-          const kutuYeri = kutu.getBoundingClientRect();
-          const sagYari = e.clientX > kutuYeri.left + kutuYeri.width / 2;
-          dizilis = dizilis.filter((x) => x !== surukId);
-          let yer = dizilis.indexOf(id);
-          if (sagYari) yer++;
-          dizilis.splice(yer, 0, surukId);
-          surukId = null;
-          ciz();
-        });
-        istaka.appendChild(kutu);
-      });
-    }
-
-    // Boş istaka alanına bırakınca sona taşı
-    $('istaka').addEventListener('dragover', (e) => e.preventDefault());
-    $('istaka').addEventListener('drop', (e) => {
-      e.preventDefault();
-      if (surukId === null) return;
-      dizilis = dizilis.filter((x) => x !== surukId);
-      dizilis.push(surukId);
-      surukId = null;
-      ciz();
-    });
-
-    // Atma alanına bırakınca at
-    $('atmaAlani').addEventListener('dragover', (e) => e.preventDefault());
-    $('atmaAlani').addEventListener('drop', (e) => {
-      e.preventDefault();
-      if (surukId !== null) tasAt(surukId);
-      surukId = null;
-    });
-
-    function tasAt(id) {
-      if (!benimSiram()) return ($('uyari').textContent = 'Sıra sende değil.');
-      if (!durum.cekti) return ($('uyari').textContent = 'Önce bir taş çekmelisin.');
-      socket.emit('at', id);
-      seciliId = null;
-    }
-
-    // ---------- Düğmeler ----------
-    $('dagit').onclick = () => {
-      if (durum && durum.oyunVar && !confirm('El devam ediyor. Yeniden dağıtılsın mı?')) return;
-      socket.emit('dagit');
-    };
-    $('ortadanCek').onclick = () => socket.emit('cek', 'orta');
-    $('at').onclick = () => { if (seciliId !== null) tasAt(seciliId); };
-
-    $('bitir').onclick = () => {
-      if (seciliId === null) return;
-      socket.emit('bitir', { tasId: seciliId, dizilis: dizilis });
-    };
-
-    socket.on('bitti', (veri) => {
-      $('sonucBaslik').textContent = veri.aciklama;
-      const alan = $('sonucEl');
-      alan.innerHTML = '';
-      veri.el.forEach((t) => alan.appendChild(tasKutusu(t)));
-      const ok = document.createElement('span');
-      ok.textContent = '  ← attığı taş: ';
-      ok.style.marginLeft = '12px';
-      alan.appendChild(ok);
-      alan.appendChild(tasKutusu(veri.atilan));
-      $('sonuc').style.display = 'block';
-    });
-
-    $('diz').onclick = () => {
-      const tasBul = {};
-      durum.elim.forEach((t) => (tasBul[t.id] = t));
-      dizilis.sort((a, b) => {
-        const x = tasBul[a], y = tasBul[b];
-        return renkSira[x.renk] - renkSira[y.renk] || x.sayi - y.sayi;
-      });
-      ciz();
-    };
-  </script>
+  <script src="/bitis.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

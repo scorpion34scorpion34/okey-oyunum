@@ -145,4 +145,6 @@ function bitisTuru(el, okey) {
   return null;
 }
 
-module.exports = { bitisTuru };
+// Hem sunucuda (Node) hem tarayıcıda çalışır
+if (typeof module !== 'undefined' && module.exports) module.exports = { bitisTuru };
+else window.Bitis = { bitisTuru };
